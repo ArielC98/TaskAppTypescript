@@ -5,7 +5,20 @@ import { resetPassword } from './reset';
 const loginForm = document.querySelector('#pills-login form') as HTMLFormElement;
 
 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-const loginEmailInput = document.getElementById('loginName') as HTMLInputElement;
+
+const rememberMeCheckbox = document.getElementById('rememberMecheck') as HTMLInputElement;
+
+
+
+const rememberedEmail = localStorage.getItem('rememberedEmail');
+if (rememberedEmail) {
+  const loginEmailInput = document.getElementById('loginName') as HTMLInputElement
+
+  loginEmailInput.value = rememberedEmail;
+  rememberMeCheckbox.checked = true;
+}
+
+
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -18,11 +31,19 @@ loginForm.addEventListener('submit', async (e) => {
     return;
   }
 
+
+
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     console.log('User logged in:', user.email);
+
+    if (rememberMeCheckbox.checked) {
+      localStorage.setItem('rememberedEmail', email);
+    } else {
+      localStorage.removeItem('rememberedEmail');
+    }
 
     // Redirigir a la página de tareas
     window.location.href = 'tasks.html';
@@ -30,6 +51,7 @@ loginForm.addEventListener('submit', async (e) => {
     console.error('Login error:', error.message);
     alert('Login failed: ' + error.message);
   }
+
 });
 
 
@@ -49,5 +71,7 @@ forgotPasswordLink?.addEventListener('click', async (e) => {
     alert('Error sending password reset email: ' + error.message);
   }
 });
+
+
 
 
