@@ -11,7 +11,7 @@ export async function registerUser(email: string, password: string, name: string
     await updateProfile(user, { displayName: name });
 
     console.log('Usuario registrado:', user.email, 'Nombre:', user.displayName);
-    window.location.href = 'tasks.html';
+    window.location.href = './tasks.html';
   } catch (error: any) {
     console.error('Error en el registro:', error.message);
     alert(`Error al registrarse: ${error.message}`);
@@ -25,7 +25,7 @@ export async function loginUser(email: string, password: string): Promise<void> 
     const user = userCredential.user;
     console.log('Usuario logueado:', user.email);
     // Redirigir al dashboard o tareas
-    window.location.href = 'tasks.html';
+    window.location.href = './tasks.html';
   } catch (error: any) {
     console.error('Error en el inicio de sesión:', error.message);
     alert(`Error al iniciar sesión: ${error.message}`);

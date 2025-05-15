@@ -46,7 +46,7 @@ loginForm.addEventListener('submit', async (e) => {
     }
 
     // Redirigir a la página de tareas
-    window.location.href = 'tasks.html';
+    window.location.href = './tasks.html';
   } catch (error: any) {
     console.error('Login error:', error.message);
     alert('Login failed: ' + error.message);
