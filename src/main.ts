@@ -3,7 +3,6 @@
 // import viteLogo from '/vite.svg'
 // import { setupCounter } from './counter.ts'
 import 'mdb-ui-kit';
-import { mockUsers, User } from './assets/users';
 
 // document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 //   <div>
@@ -54,24 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //Validacion de inicio de sesion
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.querySelector('#pills-login form') as HTMLFormElement;
+// document.addEventListener('DOMContentLoaded', () => {
+//   const loginForm = document.querySelector('#pills-login form') as HTMLFormElement;
 
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+//   loginForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
 
-    const email: string = (document.getElementById('loginName') as HTMLInputElement).value.trim();
-    const password: string = (document.getElementById('loginPassword') as HTMLInputElement).value.trim();
+//     const email: string = (document.getElementById('loginName') as HTMLInputElement).value.trim();
+//     const password: string = (document.getElementById('loginPassword') as HTMLInputElement).value.trim();
 
-    const user: User | undefined = mockUsers.find(u => u.email === email && u.password === password);
+//     const user: User | undefined = mockUsers.find(u => u.email === email && u.password === password);
 
-    if (user) {
-      alert(`Bienvenido, ${user.username}`);
-      localStorage.setItem('loggedUser', JSON.stringify({ name: 'Juan' }));
-      window.location.href = '../tasks.html';
-    } else {
-      alert('Credenciales incorrectas');
-    }
-  });
-});
+//     if (user) {
+//       alert(`Bienvenido, ${user.username}`);
+//       localStorage.setItem('loggedUser', JSON.stringify({ name: 'Juan' }));
+//       window.location.href = '../tasks.html';
+//     } else {
+//       alert('Credenciales incorrectas');
+//     }
+//   });
+// });
 

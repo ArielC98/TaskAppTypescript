@@ -1,4 +1,5 @@
-
+import { auth } from '../api/firebase';  // Ajusta la ruta según tu proyecto
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 interface Task {
   id: number;
@@ -10,19 +11,31 @@ interface Task {
 const taskForm = document.getElementById('taskForm') as HTMLFormElement;
 const taskInput = document.getElementById('taskInput') as HTMLInputElement;
 const taskList = document.getElementById('taskList') as HTMLUListElement;
-const usernameSpan = document.getElementById('username') as HTMLSpanElement;
+const usernameSpan = document.getElementById('username') as HTMLElement;
 const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement;
 
-//Logged user data
-const user = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-document.getElementById('username')!.textContent = user.name || 'Guest';
-
-//Load tasks from localStorage
+// Tasks loaded from localStorage
 let tasks: Task[] = JSON.parse(localStorage.getItem('tasks') || '[]');
 
 // Show tasks once page is loaded
 window.addEventListener('DOMContentLoaded', () => {
   renderTasks();
+});
+
+// Observe auth state and display user info
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const displayName = user.displayName || user.email || 'User';
+    if (usernameSpan) {
+      usernameSpan.textContent = displayName;
+    }
+  } else {
+    if (usernameSpan) {
+      usernameSpan.textContent = 'Guest';
+    }
+    // Opcional: si no hay usuario, redirigir al login
+    window.location.href = 'index.html';
+  }
 });
 
 // Add new task
@@ -75,7 +88,7 @@ taskList.addEventListener('click', (e) => {
 });
 
 // Logout
-logoutBtn.addEventListener('click', () => {
-  localStorage.removeItem('loggedUser');
+logoutBtn.addEventListener('click', async () => {
+  await signOut(auth);
   window.location.href = 'index.html';
 });
